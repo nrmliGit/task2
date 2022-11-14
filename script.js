@@ -1,36 +1,49 @@
 class Message{
-    constructor(authorName, sendingDate, text){
+    gettime() {
+        let currentTime = new Date();
+        return `${currentTime.getHours()}:${currentTime.getMinutes()}`
+    }
+    constructor(authorName, text){
         this.authorName = authorName;
-        this.sendingDate = sendingDate;
+        this.sendingDate =this.gettime();
         this.text = text;
     }
     toString(){ 
         console.log(String(this.authorName + " " + this.sendingDate + " " + this.text))
     }
+    toHTML(){
+        let x=`<p>${this.sendingDate} ${this.authorName}: ${this.text}</ p>`
+    }
 }
 
-let message1 = new Message("Adil", "10:21" , "ilk mesaj" );
+let message1 = new Message("Adil", "ilk mesaj" );
 message1.toString();
 
 
 
+var arr = [];
 class Messenger extends Message{
     constructor(authorName, sendingDate, text){
         super(authorName, sendingDate, text)
     }
     show_history(){ 
-        console.log(this.sendingDate + " " + this.authorName + ": " + this.text);
+        arr.forEach(
+            function(value){
+                console.log(value.sendingDate+" "+ value.authorName+ " " +value.text) 
+            }
+        )
     }
     send(authorName, text){
-        this.authorName = authorName;
-        this.text = text;
-        console.log(this.sendingDate + " " + this.authorName + ": " + this.text);
+        let newMessage = new Message(authorName,text)
+      arr.push(newMessage)
     }
 }
 
 
 
-let message2 = new Messenger("Meryem", "10:21" , "ikinci mesaj" );
-message2.show_history();
-message2.send("Arif", "yeni mesaj")
+let messenger1 = new Messenger();
 
+messenger1.send('Adil', 'ilk mesaj')
+messenger1.send('Meryem', 'ikinci mesaj')
+
+messenger1.show_history()
